@@ -1,0 +1,12 @@
+.balans {
+    color: white;
+    font-size: 20px;
+}
+
+.balans__info, .balans__sum {
+    padding-right: 5px;
+}
+
+.balans__sum {
+    font-weight: 500;
+}
