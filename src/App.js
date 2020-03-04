@@ -10,12 +10,12 @@ function App() {
   return (
     <Layout>
       <Navbar />
-      <Content className="site-layout" style={{ padding: '0 50px', marginTop: 30 }}>
-        <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
+      <Content className="site-layout content">
+        <div className="site-layout-background content__block">
           Content
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      <Footer style={{ textAlign: 'center' }}>MyMoney ©2020 Создал Гребенёв Олег</Footer>
     </Layout>
   );
 }

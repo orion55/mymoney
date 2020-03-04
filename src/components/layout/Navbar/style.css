@@ -11,8 +11,14 @@
 
 .nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+.nav__row {
+    display: flex;
+    width: 70%;
     align-items: center;
+    justify-content: space-between;
 }
 
 .nav__block {

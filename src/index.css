@@ -1,6 +1,23 @@
 .site-layout .site-layout-background {
     background: #fff;
 }
+
 [data-theme="dark"] .site-layout .site-layout-background {
     background: #141414;
+}
+
+.content {
+    padding: 0 50px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.content__block {
+    padding: 24px;
+    min-height: 380px;
+    display: flex;
+    width: 70%;
+    align-items: baseline;
+    justify-content: space-between;
 }
