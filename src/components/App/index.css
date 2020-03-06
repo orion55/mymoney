@@ -6,6 +6,10 @@
     background: #141414;
 }
 
+.layout {
+    height: 100vh;
+}
+
 .content {
     padding: 0 50px;
     margin-top: 30px;

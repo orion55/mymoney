@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import {Layout, Button } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import './style.css';
-import Balans from '../../Balans';
+import Balans from '../Balans';
 
 const { Header } = Layout;
 

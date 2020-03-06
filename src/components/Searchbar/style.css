@@ -1,0 +1,16 @@
+.searchbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+    align-self: flex-end;
+}
+
+.searchbar__text {
+    white-space: nowrap;
+    padding-right: 10px;
+}
+
+.searchbar__input {
+    width: 350px;
+}
