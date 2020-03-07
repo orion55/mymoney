@@ -8,7 +8,7 @@ function Searchbar() {
   return (
     <div className="searchbar">
       <span className="searchbar__text">Поиск операций:</span>
-      <Search placeholder="Дата, наименование, сумма, получатель" onSearch={(value) => console.log(value)} enterButton className="searchbar__input" />
+      <Search placeholder="по сумме, категории, получателю" onSearch={(value) => console.log(value)} enterButton className="searchbar__input" />
     </div>
   );
 }
