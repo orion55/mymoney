@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 import { EditOutlined, CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import './style.css';
+import { moneyFormat } from '../../libs/util';
 
 const columns = [
   {
@@ -39,7 +40,7 @@ const columns = [
     },
     render: (val) => (
       <div className="list__sum">
-        { parseFloat(val).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1 ').replace('.', ',') }
+        { moneyFormat(val) }
       </div>
     ),
   },

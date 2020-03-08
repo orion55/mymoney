@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import Modalform from '../Modalform';
 
 function Addpay() {
+  const [show, setShow] = useState(false);
   return (
-    <Button type="primary" icon={<PlusOutlined />} onClick={(e) => { console.log(e); }}>
-      Добавить запись
-    </Button>
+    <>
+      <Modalform showModal={show} onShow={() => setShow(false)} />
+      <Button type="primary" icon={<PlusOutlined />} onClick={() => setShow(true)}>
+        Добавить транзакцию
+      </Button>
+    </>
   );
 }
 
