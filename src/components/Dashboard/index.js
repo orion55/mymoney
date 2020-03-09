@@ -1,17 +1,17 @@
 import React from 'react';
-import Searchbar from '../Searchbar';
-import Listpayments from '../Listpayments';
-import Addpay from '../Addpay';
+import SearchBar from '../SearchBar';
+import ListPayments from '../ListPayments';
+import AddPay from '../AddPay';
 import './style.css';
 
 function Dashboard() {
   return (
     <div className="dashboard">
       <div className="dashboard__block">
-        <Addpay />
-        <Searchbar />
+        <AddPay />
+        <SearchBar />
       </div>
-      <Listpayments />
+      <ListPayments />
     </div>
   );
 }

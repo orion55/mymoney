@@ -3,30 +3,41 @@ import {
   Modal, Form, DatePicker, Input, InputNumber,
 } from 'antd';
 import locale from 'antd/es/date-picker/locale/ru_RU';
-import moment from 'moment';
 
-function Modalform(props) {
-  const { showModal, onShow } = props;
+
+function ModalForm(props) {
+  const {
+    showModal, onOk, onCancel, initialValues,
+  } = props;
   const dateFormat = 'DD.MM.YYYY';
-
+  const [form] = Form.useForm();
+  const onFuncOk = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        form.resetFields();
+        onOk(values);
+      })
+      .catch((info) => {
+        console.log('Ошибка валидации:', info);
+      });
+  };
   return (
     <Modal
       title="Добавить транзакцию"
       centered
       visible={showModal}
-      onOk={onShow}
-      onCancel={onShow}
+      onOk={onFuncOk}
+      onCancel={onCancel}
       cancelText="Отмена"
     >
       <Form
+        form={form}
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 19 }}
         layout="horizontal"
         size="middle"
-        initialValues={{
-          sum: 0,
-          period: moment(),
-        }}
+        initialValues={initialValues}
       >
         <Form.Item
           name="period"
@@ -39,7 +50,7 @@ function Modalform(props) {
           <DatePicker format={dateFormat} locale={locale} />
         </Form.Item>
         <Form.Item
-          name="сategory"
+          name="category"
           label="Категория"
           rules={[{
             required: true,
@@ -67,4 +78,4 @@ function Modalform(props) {
   );
 }
 
-export default Modalform;
+export default ModalForm;

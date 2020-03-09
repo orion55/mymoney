@@ -4,7 +4,7 @@ import './style.css';
 
 const { Search } = Input;
 
-function Searchbar() {
+function SearchBar() {
   return (
     <div className="searchbar">
       <span className="searchbar__text">Поиск операций:</span>
@@ -13,4 +13,4 @@ function Searchbar() {
   );
 }
 
-export default Searchbar;
+export default SearchBar;

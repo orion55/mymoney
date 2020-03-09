@@ -7,7 +7,7 @@ import Balans from '../Balans';
 
 const { Header } = Layout;
 
-function Navbar() {
+function NavBar() {
   return (
     <Header className="nav">
       <div className="nav__row">
@@ -22,4 +22,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavBar;
