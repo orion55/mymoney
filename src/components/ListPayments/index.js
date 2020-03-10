@@ -123,9 +123,16 @@ function ListPayments() {
     },
   ];
 
+  const param = {
+    show,
+    onShow: () => setShow(false),
+    record,
+    key: record == null ? 0 : record.key,
+  };
+
   return (
     <>
-      <EditModal show={show} onShow={() => setShow(false)} record={record} key={record == null ? 0 : record.key} />
+      <EditModal {...param} />
       <Table columns={columns} dataSource={data} pagination={false} />
     </>
   );

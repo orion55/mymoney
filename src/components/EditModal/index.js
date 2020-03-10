@@ -7,14 +7,7 @@ function EditModal(props) {
 
   let defValues = {};
 
-  if (record === null) {
-    defValues = {
-      sum: 0,
-      category: '',
-      period: moment(),
-      recipient: '',
-    };
-  } else {
+  if (record !== null) {
     defValues = {
       sum: record.sum,
       category: record.category,
@@ -32,10 +25,10 @@ function EditModal(props) {
     },
     onCancel: onShow,
     initialValues: defValues,
+    title: 'Редактировать транзакцию',
   };
 
   return (
-  // eslint-disable-next-line react/jsx-props-no-spreading
     <ModalForm {...param} />
   );
 }

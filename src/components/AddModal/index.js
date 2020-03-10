@@ -18,9 +18,9 @@ function AddModal(props) {
       period: moment(),
       recipient: '',
     },
+    title: 'Добавить транзакцию',
   };
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
     <ModalForm {...param} />
   );
 }

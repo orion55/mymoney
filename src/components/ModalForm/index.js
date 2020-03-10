@@ -7,7 +7,7 @@ import locale from 'antd/es/date-picker/locale/ru_RU';
 
 function ModalForm(props) {
   const {
-    showModal, onOk, onCancel, initialValues,
+    showModal, onOk, onCancel, initialValues, title,
   } = props;
   const dateFormat = 'DD.MM.YYYY';
   const [form] = Form.useForm();
@@ -24,7 +24,7 @@ function ModalForm(props) {
   };
   return (
     <Modal
-      title="Добавить транзакцию"
+      title={title}
       centered
       visible={showModal}
       onOk={onFuncOk}
