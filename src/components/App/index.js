@@ -6,6 +6,7 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import NavBar from '../NavBar';
 import Dashboard from '../Dashboard';
 import SignIn from '../SignIn';
+import SignUp from '../SignUp';
 
 const { Content, Footer } = Layout;
 
@@ -19,7 +20,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={Dashboard} />
               <Route path="/signin" component={SignIn} />
-              {/* <Route path="/signup" component={SignUp} /> */}
+              <Route path="/signup" component={SignUp} />
             </Switch>
           </div>
         </Content>

@@ -1,22 +1,23 @@
 import React from 'react';
-import {
-  Form, Input, Button, Checkbox,
-} from 'antd';
+import { Form, Input, Button } from 'antd';
+import './style.css';
 
 const layout = {
   labelCol: {
     span: 8,
   },
   wrapperCol: {
-    span: 16,
+    span: 10,
   },
 };
+
 const tailLayout = {
   wrapperCol: {
     offset: 8,
     span: 16,
   },
 };
+
 function SignIn() {
   const onFinish = (values) => {
     console.log('Success:', values);
@@ -26,51 +27,45 @@ function SignIn() {
     console.log('Failed:', errorInfo);
   };
   return (
-    <Form
-      {...layout}
-      name="basic"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
-      <Form.Item
-        label="Username"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your username!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+    <div className="signin">
+      <Form {...layout} name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed} className="signin__form">
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              type: 'email',
+              message: 'Введённая информация не является допустимым E-mail!',
+            },
+            {
+              required: true,
+              message: 'Пожалуйста, введите Ваш E-mail!!',
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+        <Form.Item
+          label="Пароль"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите Ваш пароль!',
+            },
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
 
-      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit">
+            Вход
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 }
 
