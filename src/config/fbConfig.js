@@ -1,4 +1,8 @@
-const firebaseConfig = {
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+
+const config = {
   apiKey: 'AIzaSyAEOYkMM2xYokEEFTHRmok_l1acX4_Pnn0',
   authDomain: 'mymoney-94ccc.firebaseapp.com',
   databaseURL: 'https://mymoney-94ccc.firebaseio.com',
@@ -7,3 +11,7 @@ const firebaseConfig = {
   messagingSenderId: '129188174683',
   appId: '1:129188174683:web:f9211c3e2b6ab8feff987e',
 };
+firebase.initializeApp(config);
+firebase.firestore();
+
+export default firebase;

@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 import { EditOutlined, CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import './style.css';
-import { moneyFormat } from '../../libs/util';
+import Amount from 'arui-feather/amount';
 import EditModal from '../EditModal';
-
+import firebase from '../../config/fbConfig';
 
 function ListPayments() {
   const [show, setShow] = useState(false);
   const [record, setRecord] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const db = firebase.firestore();
+      const data = await db.collection('transactions').get();
+      console.log(data.docs.map((doc) => ({ ...doc.data(), key: doc.id })));
+      // console.log(data);
+      // setSpells(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    };
+    fetchData();
+  }, []);
 
   const columns = [
     {
@@ -46,7 +56,7 @@ function ListPayments() {
       },
       render: (val) => (
         <div className="list__sum">
-          { moneyFormat(val) }
+          <Amount size="s" amount={{ value: val, currency: { code: 'RUR', minority: 100 } }} className="" showZeroMinorPart />
         </div>
       ),
     },
@@ -90,35 +100,35 @@ function ListPayments() {
       key: '1',
       period: '06.03.2020',
       category: 'Транспорт',
-      sum: -26,
+      sum: -2600,
       recipient: '',
     },
     {
       key: '2',
       period: '06.03.2020',
       category: 'Продукты, еда',
-      sum: -260,
+      sum: -26000,
       recipient: 'Магнит',
     },
     {
       key: '3',
       period: '05.03.2020',
       category: 'Образование',
-      sum: -87,
+      sum: -8700,
       recipient: 'Веб-сайт',
     },
     {
       key: '4',
       period: '05.03.2020',
       category: 'Здоровье',
-      sum: -49.90,
+      sum: -4990,
       recipient: 'Аптека',
     },
     {
       key: '5',
       period: '04.03.2020',
       category: 'Зарплата',
-      sum: 10000,
+      sum: 1000000,
       recipient: 'Работа',
     },
   ];

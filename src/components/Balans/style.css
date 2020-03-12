@@ -10,3 +10,7 @@
 .balans__sum {
     font-weight: 500;
 }
+
+.balans__val > .label_theme_alfa-on-white {
+    color: white;
+}

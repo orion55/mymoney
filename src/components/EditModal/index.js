@@ -9,7 +9,7 @@ function EditModal(props) {
 
   if (record !== null) {
     defValues = {
-      sum: record.sum,
+      sum: record.sum / 100,
       category: record.category,
       period: moment(record.period, 'DD.MM.YYYY'),
       recipient: record.recipient,
