@@ -8,7 +8,6 @@ import rootReducer from './store/reducers/rootReducer';
 import App from './components/App';
 import firebase from './config/fbConfig';
 
-
 const rrfConfig = {
   userProfile: 'users',
   useFirestoreForProfile: true,

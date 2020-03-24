@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Table, Button, Popconfirm } from 'antd';
 import { EditOutlined, CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import './style.css';
+import 'firebase/database';
 import Amount from 'arui-feather/amount';
+import { useSelector } from 'react-redux';
+import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import EditModal from '../EditModal';
-import firebase from '../../config/fbConfig';
 
 function ListPayments() {
   const [show, setShow] = useState(false);
   const [record, setRecord] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      const db = firebase.firestore();
-      const data = await db.collection('transactions').get();
-      console.log(data.docs.map((doc) => ({ ...doc.data(), key: doc.id })));
-      // console.log(data);
-      // setSpells(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-    };
-    fetchData();
-  }, []);
+
+  useFirestoreConnect('transactions');
+  const transactions = useSelector((state) => state.firestore.data.transactions);
 
   const columns = [
     {
@@ -140,6 +135,14 @@ function ListPayments() {
     key: record == null ? 0 : record.key,
   };
 
+  if (!isLoaded(transactions)) {
+    return 'Loading...';
+  }
+
+  if (isEmpty(transactions)) {
+    return 'Transactions list is empty';
+  }
+  console.log(transactions);
   return (
     <>
       <EditModal {...param} />
