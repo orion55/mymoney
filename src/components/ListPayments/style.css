@@ -2,3 +2,10 @@
     text-align: right;
     width: 50%;
 }
+
+.list__spin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}

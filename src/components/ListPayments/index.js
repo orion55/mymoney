@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Table, Button, Popconfirm } from 'antd';
+import {
+  Table, Button, Popconfirm, Spin,
+  Alert,
+} from 'antd';
 import { EditOutlined, CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import './style.css';
 import 'firebase/database';
 import Amount from 'arui-feather/amount';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { createSelector } from '@reduxjs/toolkit';
+import _ from 'lodash';
 import EditModal from '../EditModal';
 
 function ListPayments() {
@@ -136,13 +141,32 @@ function ListPayments() {
   };
 
   if (!isLoaded(transactions)) {
-    return 'Loading...';
+    return (
+      <div className="list__spin">
+        <Spin />
+      </div>
+    );
   }
 
   if (isEmpty(transactions)) {
-    return 'Transactions list is empty';
+    return (
+      <div className="list__spin">
+        <Alert message="Список транзакций пуст" type="error" />
+      </div>
+    );
   }
-  console.log(transactions);
+
+  const selectUid = () => '3PfmQHvlkicXruAesEfnvoAVFJz2';
+  const selectTrans = (state) => _.map(state, (obj, key) => ({ ...obj, key }));
+
+  const selectVisibleData = createSelector(
+    [selectUid, selectTrans],
+    (uid, state) => _.filter(state, (obj) => obj.uid === uid),
+  );
+
+  // console.log(transactions);
+  console.log(selectTrans(transactions));
+  console.log(selectVisibleData(transactions));
   return (
     <>
       <EditModal {...param} />
