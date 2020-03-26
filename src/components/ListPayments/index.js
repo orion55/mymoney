@@ -7,18 +7,21 @@ import './style.css';
 import 'firebase/database';
 import Amount from 'arui-feather/amount';
 import { useSelector } from 'react-redux';
-import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import {
+  useFirestoreConnect, isLoaded, isEmpty, useFirestore,
+} from 'react-redux-firebase';
 import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import moment from 'moment';
 import EditModal from '../EditModal';
 
 function ListPayments() {
   const [show, setShow] = useState(false);
   const [record, setRecord] = useState(null);
+  const [keyRecord, setKeyRecord] = useState(_.uniqueId());
 
   useFirestoreConnect('transactions');
   const transactions = useSelector((state) => state.firestore.data.transactions);
+  const firestore = useFirestore();
 
   const columns = [
     {
@@ -84,10 +87,16 @@ function ListPayments() {
             icon={<EditOutlined />}
             onClick={() => {
               setRecord(curRecord);
+              setKeyRecord(_.uniqueId());
               setShow(true);
             }}
           />
-          <Popconfirm title="Удалить запись?" onConfirm={() => console.log(curRecord.key)} cancelText="Отмена" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
+          <Popconfirm
+            title="Удалить запись?"
+            onConfirm={() => firestore.delete(`transactions/${curRecord.key}`)}
+            cancelText="Отмена"
+            icon={(<QuestionCircleOutlined style={{ color: 'red' }} />)}
+          >
             <Button type="link" icon={<CloseOutlined />} />
           </Popconfirm>
         </div>
@@ -98,8 +107,6 @@ function ListPayments() {
   const param = {
     show,
     onShow: () => setShow(false),
-    record,
-    key: record == null ? 0 : record.key,
   };
 
   if (!isLoaded(transactions)) {
@@ -119,21 +126,20 @@ function ListPayments() {
   }
 
   const selectUid = () => '3PfmQHvlkicXruAesEfnvoAVFJz2';
-  const selectTrans = (state) => _.map(state, (obj, key) => ({ ...obj, key, period: moment().format('DD.MM.YYYY') }));
+  const selectTrans = (state) => _(state)
+    .map((obj, key) => ({ ...obj, key }))
+    .sortBy('period')
+    .reverse()
+    .value();
 
   const selectVisibleData = createSelector(
     [selectUid, selectTrans],
     (uid, state) => _.filter(state, (obj) => obj.uid === uid),
   );
-
-  // console.log(transactions);
-  /*
-  console.log(selectTrans(transactions));
-  console.log(selectVisibleData(transactions));
-*/
+  // console.log(param);
   return (
     <>
-      <EditModal {...param} />
+      <EditModal {...param} record={record} key={keyRecord} />
       <Table columns={columns} dataSource={selectVisibleData(transactions)} pagination={false} />
     </>
   );

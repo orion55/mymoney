@@ -1,9 +1,13 @@
 import React from 'react';
 import moment from 'moment';
+import { useFirestore } from 'react-redux-firebase';
 import ModalForm from '../ModalForm';
 
 function EditModal(props) {
   const { show, onShow, record } = props;
+  const firestore = useFirestore();
+
+  const selectUid = () => '3PfmQHvlkicXruAesEfnvoAVFJz2';
 
   let defValues = {};
 
@@ -16,11 +20,17 @@ function EditModal(props) {
     };
   }
 
+
   const param = {
     showModal: show,
     onOk: (values) => {
-      console.log(values);
-      console.log(record.key);
+      const newVal = {
+        ...values,
+        period: moment(values.period).format('DD.MM.YYYY'),
+        uid: selectUid(),
+        sum: values.sum * 100,
+      };
+      firestore.update(`transactions/${record.key}`, newVal);
       onShow();
     },
     onCancel: onShow,

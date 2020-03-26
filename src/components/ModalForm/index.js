@@ -22,6 +22,7 @@ function ModalForm(props) {
         console.log('Ошибка валидации:', info);
       });
   };
+  // console.log(initialValues);
   return (
     <Modal
       title={title}
