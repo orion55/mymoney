@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Table, Button, Popconfirm, Spin,
-  Alert,
+  Table, Button, Popconfirm, Spin, Alert,
 } from 'antd';
 import { EditOutlined, CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import './style.css';
@@ -11,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
+import moment from 'moment';
 import EditModal from '../EditModal';
 
 function ListPayments() {
@@ -87,49 +87,11 @@ function ListPayments() {
               setShow(true);
             }}
           />
-          <Popconfirm title="Удалить запись?" onConfirm={() => console.log(record.key)} cancelText="Отмена" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
+          <Popconfirm title="Удалить запись?" onConfirm={() => console.log(curRecord.key)} cancelText="Отмена" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
             <Button type="link" icon={<CloseOutlined />} />
           </Popconfirm>
         </div>
       ),
-    },
-  ];
-
-  const data = [
-    {
-      key: '1',
-      period: '06.03.2020',
-      category: 'Транспорт',
-      sum: -2600,
-      recipient: '',
-    },
-    {
-      key: '2',
-      period: '06.03.2020',
-      category: 'Продукты, еда',
-      sum: -26000,
-      recipient: 'Магнит',
-    },
-    {
-      key: '3',
-      period: '05.03.2020',
-      category: 'Образование',
-      sum: -8700,
-      recipient: 'Веб-сайт',
-    },
-    {
-      key: '4',
-      period: '05.03.2020',
-      category: 'Здоровье',
-      sum: -4990,
-      recipient: 'Аптека',
-    },
-    {
-      key: '5',
-      period: '04.03.2020',
-      category: 'Зарплата',
-      sum: 1000000,
-      recipient: 'Работа',
     },
   ];
 
@@ -157,7 +119,7 @@ function ListPayments() {
   }
 
   const selectUid = () => '3PfmQHvlkicXruAesEfnvoAVFJz2';
-  const selectTrans = (state) => _.map(state, (obj, key) => ({ ...obj, key }));
+  const selectTrans = (state) => _.map(state, (obj, key) => ({ ...obj, key, period: moment().format('DD.MM.YYYY') }));
 
   const selectVisibleData = createSelector(
     [selectUid, selectTrans],
@@ -165,12 +127,14 @@ function ListPayments() {
   );
 
   // console.log(transactions);
+  /*
   console.log(selectTrans(transactions));
   console.log(selectVisibleData(transactions));
+*/
   return (
     <>
       <EditModal {...param} />
-      <Table columns={columns} dataSource={data} pagination={false} />
+      <Table columns={columns} dataSource={selectVisibleData(transactions)} pagination={false} />
     </>
   );
 }

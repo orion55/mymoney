@@ -1,14 +1,17 @@
 import React from 'react';
 import moment from 'moment';
+import { useFirestore } from 'react-redux-firebase';
 import ModalForm from '../ModalForm';
 
 function AddModal(props) {
   const { show, onShow } = props;
+  const firestore = useFirestore();
 
   const param = {
     showModal: show,
     onOk: (values) => {
       console.log(values);
+      // firestore.add('transactions', values);
       onShow();
     },
     onCancel: onShow,
