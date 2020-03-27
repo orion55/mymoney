@@ -21,6 +21,7 @@ function ListPayments() {
 
   useFirestoreConnect('transactions');
   const transactions = useSelector((state) => state.firestore.data.transactions);
+  const searchText = useSelector((state) => state.search);
   const firestore = useFirestore();
 
   const columns = [
@@ -136,11 +137,36 @@ function ListPayments() {
     [selectUid, selectTrans],
     (uid, state) => _.filter(state, (obj) => obj.uid === uid),
   );
-  // console.log(param);
+
+  const searchFunc = () => searchText;
+
+  const selectSearchData = createSelector(
+    [searchFunc, selectVisibleData],
+    (text, state) => {
+      if (text === '') {
+        return state;
+      }
+      const textLow = text.toLowerCase();
+
+      const result01 = _.filter(state,
+        (obj) => obj.category.toLowerCase().indexOf(textLow) !== -1);
+
+      const result02 = _.filter(state, (obj) => {
+        const newSum = Math.trunc(obj.sum / 100);
+        return newSum.toString().indexOf(textLow) !== -1;
+      });
+
+      const result03 = _.filter(state,
+        (obj) => obj.recipient.toLowerCase().indexOf(textLow) !== -1);
+
+      return _.unionWith(result01, result02, result03, _.isEqual);
+    },
+  );
+
   return (
     <>
       <EditModal {...param} record={record} key={keyRecord} />
-      <Table columns={columns} dataSource={selectVisibleData(transactions)} pagination={false} />
+      <Table columns={columns} dataSource={selectSearchData(transactions)} pagination={false} />
     </>
   );
 }
