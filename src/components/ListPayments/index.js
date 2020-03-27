@@ -12,7 +12,7 @@ import {
 } from 'react-redux-firebase';
 import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import EditModal from '../EditModal';
+import EditModal from '../Modal/EditModal';
 
 function ListPayments() {
   const [show, setShow] = useState(false);

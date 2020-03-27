@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import AddModal from '../AddModal';
+import AddModal from '../Modal/AddModal';
 
 function AddPay() {
   const [show, setShow] = useState(false);

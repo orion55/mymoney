@@ -5,8 +5,8 @@ import { Layout } from 'antd';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import NavBar from '../NavBar';
 import Dashboard from '../Dashboard';
-import SignIn from '../SignIn';
-import SignUp from '../SignUp';
+import SignIn from '../Auth/SignIn';
+import SignUp from '../Auth/SignUp';
 
 const { Content, Footer } = Layout;
 
