@@ -112,7 +112,7 @@ function ListPayments() {
 
   if (!isLoaded(transactions)) {
     return (
-      <div className="list__spin">
+      <div className="spin">
         <Spin />
       </div>
     );

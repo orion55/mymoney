@@ -1,6 +1,12 @@
-import React from 'react';
-import { Form, Input, Button } from 'antd';
+import React, { useState } from 'react';
+import {
+  Form, Input, Button, Alert, Spin,
+} from 'antd';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useFirebase, isLoaded } from 'react-redux-firebase';
 import './style.css';
+
 
 const layout = {
   labelCol: {
@@ -19,12 +25,40 @@ const tailLayout = {
 };
 
 function SignIn() {
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const [authError, setAuthError] = useState('');
+  const auth = useSelector((state) => state.firebase.auth);
+  const firebase = useFirebase();
+  const history = useHistory();
+
+  const onFinish = async (values) => {
+    if (auth.uid) {
+      await firebase.auth().signOut();
+    }
+
+    try {
+      await firebase.auth().signInWithEmailAndPassword(values.email, values.password);
+      await firebase.auth();
+      setAuthError('');
+      history.push('/');
+    } catch (err) {
+      setAuthError(err.message);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
+  };
+
+  if (!isLoaded(auth)) {
+    return (
+      <div className="spin spin__full">
+        <Spin />
+      </div>
+    );
+  }
+
+  const onClose = () => {
+    setAuthError('');
   };
   return (
     <div className="signin">
@@ -64,6 +98,7 @@ function SignIn() {
             Вход
           </Button>
         </Form.Item>
+        { authError ? <div className="alert"><Alert message="Ошибка" description={authError} type="error" showIcon closable onClose={onClose} /></div> : null }
       </Form>
     </div>
   );

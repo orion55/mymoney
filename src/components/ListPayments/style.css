@@ -3,9 +3,13 @@
     width: 50%;
 }
 
-.list__spin {
+.spin {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
+}
+
+.spin__full {
+    width: 100%;
 }

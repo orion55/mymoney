@@ -1,10 +1,33 @@
 import React from 'react';
 import Amount from 'arui-feather/amount';
 import './style.css';
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
+import _ from 'lodash';
+import { Spin } from 'antd';
 
 function Balans() {
+  useFirestoreConnect('users');
+  const users = useSelector((state) => state.firestore.data.users);
+  const selectUid = () => '3PfmQHvlkicXruAesEfnvoAVFJz2';
+
+  if (!isLoaded(users)) {
+    return (
+      <div className="spin">
+        <Spin />
+      </div>
+    );
+  }
+
+  const user = _.filter(users, (obj) => obj.uid === selectUid());
+
+  let total = 0;
+  if (user.length !== 0) {
+    total = user[0].total;
+  }
+
   const AMOUNT = {
-    value: 12353500,
+    value: total,
     currency: {
       code: 'RUR',
       minority: 100,
