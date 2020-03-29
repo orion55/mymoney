@@ -21,6 +21,7 @@ function ListPayments() {
 
   useFirestoreConnect('transactions');
   const transactions = useSelector((state) => state.firestore.data.transactions);
+  const users = useSelector((state) => state.firestore.data.users);
   const searchText = useSelector((state) => state.search);
   const auth = useSelector((state) => state.firebase.auth);
   const firestore = useFirestore();
@@ -163,6 +164,30 @@ function ListPayments() {
       return _.unionWith(result01, result02, result03, _.isEqual);
     },
   );
+
+  const curUser = () => {
+    const user = _(users)
+      .map((obj, key) => ({ ...obj, key }))
+      .filter((obj) => obj.uid === selectUid())
+      .value();
+    if (user.length !== 0) {
+      return user[0];
+    }
+    return [];
+  };
+
+  const totalCalc = createSelector(
+    [curUser, selectVisibleData],
+    (user, trans) => {
+      const total = _.reduce(trans, (sum, obj) => sum + obj.sum, 0);
+      if (total !== user.total) {
+        firestore.update(`users/${user.key}`, { total });
+      }
+      return total;
+    },
+  );
+
+  totalCalc(transactions);
 
   return (
     <>
