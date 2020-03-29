@@ -34,7 +34,6 @@ function SignIn() {
     if (auth.uid) {
       await firebase.auth().signOut();
     }
-
     try {
       await firebase.auth().signInWithEmailAndPassword(values.email, values.password);
       await firebase.auth();
@@ -60,6 +59,8 @@ function SignIn() {
   const onClose = () => {
     setAuthError('');
   };
+
+
   return (
     <div className="signin">
       <Form {...layout} name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed} className="signin__form">

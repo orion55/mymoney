@@ -129,6 +129,7 @@ function ListPayments() {
   }
 
   const selectUid = () => auth.uid;
+
   const selectTrans = (state) => _(state)
     .map((obj, key) => ({ ...obj, key }))
     .sortBy('period')
@@ -180,7 +181,7 @@ function ListPayments() {
     [curUser, selectVisibleData],
     (user, trans) => {
       const total = _.reduce(trans, (sum, obj) => sum + obj.sum, 0);
-      if (total !== user.total) {
+      if (!_.isEmpty(user) && total !== user.total) {
         firestore.update(`users/${user.key}`, { total });
       }
       return total;
