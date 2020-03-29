@@ -1,12 +1,15 @@
 import React from 'react';
 import moment from 'moment';
 import { useFirestore } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
 import ModalForm from '../ModalForm';
+
 
 function AddModal(props) {
   const { show, onShow } = props;
   const firestore = useFirestore();
-  const selectUid = () => '3PfmQHvlkicXruAesEfnvoAVFJz2';
+  const auth = useSelector((state) => state.firebase.auth);
+  const selectUid = () => auth.uid;
 
   const param = {
     showModal: show,

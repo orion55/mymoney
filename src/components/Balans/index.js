@@ -9,7 +9,8 @@ import { Spin } from 'antd';
 function Balans() {
   useFirestoreConnect('users');
   const users = useSelector((state) => state.firestore.data.users);
-  const selectUid = () => '3PfmQHvlkicXruAesEfnvoAVFJz2';
+  const auth = useSelector((state) => state.firebase.auth);
+  const selectUid = () => auth.uid;
 
   if (!isLoaded(users)) {
     return (

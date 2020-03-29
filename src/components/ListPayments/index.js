@@ -22,6 +22,7 @@ function ListPayments() {
   useFirestoreConnect('transactions');
   const transactions = useSelector((state) => state.firestore.data.transactions);
   const searchText = useSelector((state) => state.search);
+  const auth = useSelector((state) => state.firebase.auth);
   const firestore = useFirestore();
 
   const columns = [
@@ -126,7 +127,7 @@ function ListPayments() {
     );
   }
 
-  const selectUid = () => '3PfmQHvlkicXruAesEfnvoAVFJz2';
+  const selectUid = () => auth.uid;
   const selectTrans = (state) => _(state)
     .map((obj, key) => ({ ...obj, key }))
     .sortBy('period')

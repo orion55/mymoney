@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import './style.css';
+import { Link } from 'react-router-dom';
 
 const layout = {
   labelCol: {
@@ -82,22 +83,12 @@ function SignUp() {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item
-          name="nickname"
-          label="Псевдоним"
-          rules={[
-            {
-              required: true,
-              message: 'Пожалуйстав введите Ваш псевдоним!',
-              whitespace: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
             Регистрация
+          </Button>
+          <Button type="link" htmlType="button">
+            <Link to="/signin">Вход</Link>
           </Button>
         </Form.Item>
       </Form>

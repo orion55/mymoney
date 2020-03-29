@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Form, Input, Button, Alert, Spin,
 } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useFirebase, isLoaded } from 'react-redux-firebase';
 import './style.css';
@@ -96,6 +96,9 @@ function SignIn() {
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
             Вход
+          </Button>
+          <Button type="link" htmlType="button">
+            <Link to="/signup">Регистрация</Link>
           </Button>
         </Form.Item>
         { authError ? <div className="alert"><Alert message="Ошибка" description={authError} type="error" showIcon closable onClose={onClose} /></div> : null }
