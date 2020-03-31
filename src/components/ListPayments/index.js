@@ -10,9 +10,9 @@ import { useSelector } from 'react-redux';
 import {
   useFirestoreConnect, isLoaded, isEmpty, useFirestore,
 } from 'react-redux-firebase';
-import { createSelector } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import EditModal from '../Modal/EditModal';
+import { selectVis, selectSearch, totalCalcFunc } from '../../store/selector/selector';
 
 function ListPayments() {
   const [show, setShow] = useState(false);
@@ -136,35 +136,11 @@ function ListPayments() {
     .reverse()
     .value();
 
-  const selectVisibleData = createSelector(
-    [selectUid, selectTrans],
-    (uid, state) => _.filter(state, (obj) => obj.uid === uid),
-  );
+  const selectVisibleData = selectVis(selectUid, selectTrans);
 
   const searchFunc = () => searchText;
 
-  const selectSearchData = createSelector(
-    [searchFunc, selectVisibleData],
-    (text, state) => {
-      if (text === '') {
-        return state;
-      }
-      const textLow = text.toLowerCase();
-
-      const result01 = _.filter(state,
-        (obj) => obj.category.toLowerCase().indexOf(textLow) !== -1);
-
-      const result02 = _.filter(state, (obj) => {
-        const newSum = Math.trunc(obj.sum / 100);
-        return newSum.toString().indexOf(textLow) !== -1;
-      });
-
-      const result03 = _.filter(state,
-        (obj) => obj.recipient.toLowerCase().indexOf(textLow) !== -1);
-
-      return _.unionWith(result01, result02, result03, _.isEqual);
-    },
-  );
+  const selectSearchData = selectSearch(searchFunc, selectVisibleData);
 
   const curUser = () => {
     const user = _(users)
@@ -177,16 +153,7 @@ function ListPayments() {
     return [];
   };
 
-  const totalCalc = createSelector(
-    [curUser, selectVisibleData],
-    (user, trans) => {
-      const total = _.reduce(trans, (sum, obj) => sum + obj.sum, 0);
-      if (!_.isEmpty(user) && total !== user.total) {
-        firestore.update(`users/${user.key}`, { total });
-      }
-      return total;
-    },
-  );
+  const totalCalc = totalCalcFunc(curUser, selectVisibleData, firestore);
 
   totalCalc(transactions);
 
