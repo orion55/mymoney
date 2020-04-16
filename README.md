@@ -1,12 +1,11 @@
+![Logo of the project](https://orion55.github.io/mymoney/mymoney.jpg)
 # Сервис по учёту финансов "MyMoney"
-Простой сервис по учёту финансов на базе данных Firebase.<br/>
+Простой сервис по учёту финансов (ReactJS + Redux + React-router + Firebase).<br/>
 ## Демо
-https://orion55.github.io/mymoney/
+Url: https://orion55.github.io/mymoney/<br/>
 Login: demo@demo.com<br/>
 Pass: demodemo<br/>
 
-
-![Logo of the project](https://orion55.github.io/mymoney/mymoney.jpg)
 
 ## Развёртывание проекта
 Вот краткое введение о том, что должен сделать разработчик, чтобы начать дальнейшую разработку проекта:
