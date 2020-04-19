@@ -9,7 +9,8 @@ COPY package-lock.json ./
 COPY src ./src
 COPY public ./public
 
-RUN npm install --silent && npm build && rm -rf node_modules public && npm install -g serve --silent
+RUN npm ci --silent && npm run build
+#RUN npm install --silent && npm build && rm -rf node_modules public && npm install -g serve --silent
 
 EXPOSE 3000
 
