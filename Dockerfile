@@ -4,14 +4,14 @@ WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
+RUN npm -g install serve
 COPY package.json ./
 COPY package-lock.json ./
 COPY src ./src
 COPY public ./public
 
 RUN npm ci --silent && npm run build
-#RUN npm install --silent && npm build && rm -rf node_modules public && npm install -g serve --silent
 
 EXPOSE 3000
 
-CMD [ "npm", "serve" ]
+CMD ["serve", "-s", "build", "-l", "3000"]
