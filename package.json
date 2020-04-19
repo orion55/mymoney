@@ -25,7 +25,8 @@
   "scripts": {
     "start": "react-scripts start",
     "make-github": "react-scripts build && rd /S /Q docs && move build docs",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "serve": "serve -s build -l 3000"
   },
   "eslintConfig": {
     "extends": "react-app"
