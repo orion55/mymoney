@@ -6,14 +6,10 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install --silent
-
 COPY src ./src
 COPY public ./public
-RUN npm build
 
-RUN rm -rf node_modules public
-RUN npm install -g serve --silent
+RUN npm install --silent && npm build && rm -rf node_modules public && npm install -g serve --silent
 
 EXPOSE 3000
 
