@@ -1,16 +1,18 @@
-FROM node:12-alpine
+FROM node:12-alpine as dependencies
 
 WORKDIR /app
 
-ENV PATH /app/node_modules/.bin:$PATH
-
-RUN npm -g install serve
-COPY package.json ./
-COPY package-lock.json ./
+COPY package*.json ./
 COPY src ./src
 COPY public ./public
 
 RUN npm ci --silent && npm run build
+
+FROM node:12-alpine AS release  
+WORKDIR /app
+RUN npm -g install serve
+
+COPY --from=dependencies /app/build ./build
 
 EXPOSE 3000
 
