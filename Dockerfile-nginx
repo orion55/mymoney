@@ -1,0 +1,10 @@
+FROM nginx
+
+WORKDIR /var/www/mymoney.infoblog72.ru/public
+
+COPY build /var/www/mymoney.infoblog72.ru/public
+COPY deploy/nginx /etc/nginx
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
