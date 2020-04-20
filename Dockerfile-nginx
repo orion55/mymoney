@@ -1,9 +1,7 @@
 FROM nginx
 
-WORKDIR /var/www/mymoney.infoblog72.ru/public
-
-COPY build /var/www/mymoney.infoblog72.ru/public
-COPY deploy/nginx /etc/nginx
+COPY docs /usr/share/nginx/html
+COPY deploy/nginx/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
