@@ -8,12 +8,11 @@ COPY public ./public
 
 RUN npm ci --silent && npm run build
 
-FROM node:12-alpine AS release  
-WORKDIR /app
-RUN npm -g install serve
+FROM nginx:alpine
 
-COPY --from=dependencies /app/build ./build
+COPY --from=dependencies /app/build /usr/share/nginx/html
+COPY deploy/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 3000
+EXPOSE 80
 
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["nginx", "-g", "daemon off;"]
