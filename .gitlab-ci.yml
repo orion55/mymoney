@@ -1,5 +1,8 @@
 image: docker:latest
 
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+  
 services:
   - docker:dind    
 
@@ -14,4 +17,6 @@ build:
   script:
     - docker image prune -f
     - docker build --tag nginx:1.5 .
-    - docker run -p 80:80 -d nginx:1.5
+    - docker stop $(docker ps -a -q)
+    - docker rm $(docker ps -a -q)
+    - docker run --restart=always -p 80:80 -d nginx:1.5
