@@ -13,6 +13,6 @@ build:
   stage: deploy
   script:
     - docker build --tag mymoney:latest .
-    - docker stop $(docker ps -a -q)
+    - docker stop $(docker ps -a -q) || true
     - docker run --restart unless-stopped -p 80:80 -d mymoney:latest
     - docker system prune -a -f
