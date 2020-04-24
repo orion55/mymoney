@@ -3,11 +3,15 @@ image: docker:latest
 services:
   - docker:dind    
 
+stages:
+  - deploy
+
 before_script:
   - docker info
   - docker version
   
 build:
+  stage: deploy
   script:
     - docker image prune -f
     - docker build --tag nginx:1.5 .
