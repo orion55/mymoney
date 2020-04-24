@@ -7,7 +7,6 @@ stages:
   - deploy
 
 before_script:
-  - docker info
   - docker version
   
 build:
