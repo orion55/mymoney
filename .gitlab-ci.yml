@@ -5,6 +5,7 @@ services:
 
 stages:
   - build
+  - deploy
 
 before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -14,3 +15,12 @@ build:
   script:
     - docker build -t registry.gitlab.com/orion55/mymoney:latest .
     - docker push registry.gitlab.com/orion55/mymoney:latest
+
+deploy:
+  stage: deploy
+  script:
+    - docker stop $(docker ps | grep mymoney | cut -d" " -f1)
+    - docker ps -a | grep 'mymoney' | awk '{print $1}' | xargs docker rm
+    - docker images -a | grep "mymoney" | awk '{print $3}' | xargs docker rmi
+    - docker pull registry.gitlab.com/orion55/mymoney:latest
+    - docker run --restart unless-stopped -p 80:80 -d registry.gitlab.com/orion55/mymoney:latest
