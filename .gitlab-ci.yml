@@ -13,8 +13,10 @@ before_script:
 build:
   stage: build
   script:
-    - docker build -t registry.gitlab.com/orion55/mymoney:latest .
-    - docker push registry.gitlab.com/orion55/mymoney:latest
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:latest    
 
 deploy:
   stage: deploy
