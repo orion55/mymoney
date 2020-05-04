@@ -24,5 +24,5 @@ deploy:
     - docker stop $(docker ps | grep mymoney | cut -d" " -f1) || true 
     - docker ps -a | grep 'mymoney' | awk '{print $1}' | xargs docker rm || true 
     - docker pull $CI_REGISTRY_IMAGE:latest
-    - docker run --restart unless-stopped -p 80:80 -d registry.gitlab.com/orion55/mymoney:latest
+    - docker run --restart unless-stopped --log-opt max-size=50m --log-opt max-file=10 -p 80:80 -d registry.gitlab.com/orion55/mymoney:latest
     #- docker image prune -f
