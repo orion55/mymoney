@@ -23,7 +23,6 @@ deploy:
   script:
     - docker stop $(docker ps | grep mymoney | cut -d" " -f1) || true 
     - docker ps -a | grep 'mymoney' | awk '{print $1}' | xargs docker rm || true 
-    #- docker images -a | grep "mymoney" | awk '{print $3}' | xargs docker rmi || true 
     - docker pull $CI_REGISTRY_IMAGE:latest
     - docker run --restart unless-stopped -p 80:80 -d $CI_REGISTRY_IMAGE:latest
     - docker image prune -f
