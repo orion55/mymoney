@@ -10,7 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.0.0",
     "arui-feather": "^17.0.0",
-    "firebase": "^7.10.0",
+    "firebase": "^10.9.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "react": "^16.13.0",
